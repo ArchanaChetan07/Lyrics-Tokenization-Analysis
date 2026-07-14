@@ -1,32 +1,46 @@
-# Lyrics Tokenization Analysis
+# Lyrics Tokenization & Group Comparison
 
-### Cher vs Robyn lyrics + Twitter follower corpora — tokenization, concentration ratios, word clouds
+### Cher vs Robyn lyrics + Twitter bios — tokenization, lexical stats, unique tokens, word clouds
 
 [![CI](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis/actions/workflows/ci.yml)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![NLP](https://img.shields.io/badge/NLP-NLTK%20%2B%20tokenization-0ea5e9)](Group%20Comparison.ipynb)
 [![Tests](https://img.shields.io/badge/pytest-8%20tests-1f8a4c)](tests/test_lyrics.py)
-[![Jupyter](https://img.shields.io/badge/notebook-26%20cells-F37626?logo=jupyter)](Group%20Comparison.ipynb)
-[![License](https://img.shields.io/badge/license-see%20repo-2d3748)](#license)
 
-Single-notebook NLP assignment comparing **Cher** and **Robyn** across four text corpora (lyrics + Twitter follower bios): custom tokenization (keep hashtags/emojis), descriptive stats, concentration-ratio uniqueness, TF-IDF-style analysis, and word clouds. No API, Docker, or Kubernetes deployment in this repo.
+ADS 509 Module 3 notebook that normalizes and tokenizes **lyrics** and **Twitter description** text for two artists (**Cher**, **Robyn**), computes descriptive corpus statistics, isolates tokens unique to each corpus, and builds word clouds — a classic **group-comparison NLP** workflow used in product/research text analytics.
 
 ---
 
-## Key Results
+## Impact Snapshot
 
-| Metric | Value | Source |
-|---|---|---|
-| Notebook cells | **26** | `Group Comparison.ipynb` |
-| Artists compared | **2** (Cher, Robyn) | notebook + follower data files |
-| Corpora analyzed | **4** (lyrics ×2, Twitter ×2) | notebook sections |
-| Cher lyrics tokens | **35,916** (3,703 unique) | notebook `descriptive_stats` output |
-| Robyn lyrics tokens | **15,227** (2,156 unique) | same |
-| Cher lyrics top token | **love** (1,004) | same |
-| Robyn lyrics top token | **know** (308) | same |
-| Cher Twitter tokens | **42,408,074** (metadata-heavy) | same |
-| Robyn Twitter tokens | **3,888,557** | same |
-| Unique-token cutoff | **n ≥ 5** appearances | concentration-ratio section |
-| Unit tests | **8** | `tests/test_lyrics.py` |
+| Corpus | Total tokens | Unique tokens | Lexical diversity | Top tokens |
+|---|---:|---:|---:|---|
+| Cher lyrics | **35,916** | **3,703** | **0.103** | love, im, know, dont, youre |
+| Robyn lyrics | **15,227** | **2,156** | **0.142** | know, dont, im, love, got |
+| Cher Twitter | **42,408,074** | **10,713,965** | **0.253** | numeric noise + love |
+| Robyn Twitter | **3,888,557** | **1,143,309** | **0.294** | numeric noise + music |
+
+Source: executed outputs in `Group Comparison.ipynb`.
+
+| Delivery | Value |
+|---|---|
+| Analyses | tokenize/normalize · descriptive stats · unique corpus tokens · word clouds ×4 |
+| Tests | **8** pytest cases (splitting, frequency, overlap, sentiment keywords) |
+| Deps | pandas, NLTK, wordcloud, emoji, scikit-learn |
+
+---
+
+## Lexical Diversity Comparison
+
+```mermaid
+xychart-beta
+    title Lexical diversity (unique / total tokens)
+    x-axis [Cher_lyrics, Robyn_lyrics, Cher_Twitter, Robyn_Twitter]
+    y-axis "Diversity" 0 --> 0.35
+    bar [0.103, 0.142, 0.253, 0.294]
+```
+
+**Reading the chart:** lyrics are repetitive (low diversity). Twitter corpora are larger/more diverse but contaminated by numeric tokens — a reminder to filter metadata before semantic claims.
 
 ---
 
@@ -34,46 +48,80 @@ Single-notebook NLP assignment comparing **Cher** and **Robyn** across four text
 
 ```mermaid
 flowchart TB
-    LY[Cher + Robyn lyrics folders] --> TOK[tokenize + normalize pipeline]
-    TW[cher_followers_data.txt + robynkonichiwa_followers_data.txt] --> TOK
-    TOK --> STATS[descriptive_stats per corpus]
-    STATS --> CONC[concentration ratio top-10 unique tokens]
-    CONC --> WC[WordCloud plots]
-    TOK --> TFIDF[TF-IDF / sklearn transforms]
+  RAW[Artist lyrics + Twitter descriptions] --> NORM[Normalize + tokenize<br/>keep hashtags/emojis on Twitter]
+  NORM --> STATS[descriptive_stats per corpus]
+  NORM --> UNIQ[Tokens unique to each corpus]
+  NORM --> WC[Word clouds x4]
+  STATS --> OBS[Written observations<br/>diversity + noise notes]
+  UNIQ --> OBS
+  WC --> OBS
+  CI[GitHub Actions + pytest] --> NORM
 ```
 
-**How it works:** `Group Comparison.ipynb` loads lyrics from per-artist folders and Twitter bios from bundled follower files, applies a pipeline (`lower → remove punctuation → tokenize → remove stopwords`), prints token/unique/lexical-diversity stats, finds corpus-unique tokens via concentration ratios, and renders word clouds. Pytest tests cover rhyme detection, repetition, and sentiment keyword checks on synthetic lyrics.
+```mermaid
+flowchart LR
+  subgraph Lyrics
+    CL[Cher lyrics 36k tok]
+    RL[Robyn lyrics 15k tok]
+  end
+  subgraph Twitter
+    CT[Cher TW 42M tok]
+    RT[Robyn TW 3.9M tok]
+  end
+  CL & RL & CT & RT --> CMP[Group comparison lens]
+```
 
 ---
 
-## Tech Stack
+## Engineering Skills Demonstrated
 
-| Layer | Choice |
-|---|---|
-| Language | Python 3.10+ |
-| NLP | NLTK stopwords, regex tokenization, emoji handling |
-| Data | pandas |
-| Viz | WordCloud, matplotlib |
-| ML helpers | sklearn `TfidfTransformer` |
-| CI | GitHub Actions + pytest |
+Python · Jupyter · NLP preprocessing · tokenization · NLTK · emoji handling · pandas · Counter-based corpus stats · lexical diversity · word clouds · comparative text analytics · pytest · GitHub Actions
 
 ---
 
-## Installation & Usage
+## Quick Start
 
 ```bash
 git clone https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis.git
 cd Lyrics-Tokenization-Analysis
+
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python -m nltk.downloader stopwords
-pytest tests/ -v
+
 jupyter notebook "Group Comparison.ipynb"
+pytest tests/ -q
 ```
 
-**Note:** Notebook cells reference local assignment paths for lyrics folders; update `cher_lyrics_path` / `robyn_lyrics_path` to your environment. Bundled Twitter follower files are in-repo.
+---
+
+## Project Structure
+
+```text
+├── Group Comparison.ipynb   # full assignment notebook + executed stats
+├── requirements.txt
+├── tests/test_lyrics.py
+└── .github/workflows/ci.yml
+```
+
+---
+
+## Design Notes
+
+1. Token-level group comparison is a building block for brand voice, content moderation diffs, and survey free-text splits.
+2. High Twitter token counts include digit-heavy noise — production pipelines should strip IDs/timestamps before diversity claims.
+3. Tests validate tokenization helpers conceptually; they do not re-download artist corpora in CI.
+
+---
+
+## Future Work
+
+- Add stopword/number filters and recompute diversity
+- TF-IDF / log-odds unique token ranking in place of the custom score
+- Package `descriptive_stats` into an importable module with CLI
 
 ---
 
 ## License
 
-See repository license file if present.
+See repository license file if present. Course materials remain subject to original ADS 509 terms.
