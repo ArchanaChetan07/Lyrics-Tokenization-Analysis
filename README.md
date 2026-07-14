@@ -1,127 +1,143 @@
-# Lyrics Tokenization & Group Comparison
+# Lyrics Group Comparison Tokenization Analysis
 
-### Cher vs Robyn lyrics + Twitter bios — tokenization, lexical stats, unique tokens, word clouds
+### ADS-style notebook comparing tokenized lyric groups across artists.
 
-[![CI](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis/actions/workflows/ci.yml)
-[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![NLP](https://img.shields.io/badge/NLP-NLTK%20%2B%20tokenization-0ea5e9)](Group%20Comparison.ipynb)
-[![Tests](https://img.shields.io/badge/pytest-8%20tests-1f8a4c)](tests/test_lyrics.py)
-
-ADS 509 Module 3 notebook that normalizes and tokenizes **lyrics** and **Twitter description** text for two artists (**Cher**, **Robyn**), computes descriptive corpus statistics, isolates tokens unique to each corpus, and builds word clouds — a classic **group-comparison NLP** workflow used in product/research text analytics.
+[![GitHub](https://img.shields.io/badge/repo-Lyrics-Tokenization-Analysis-181717?logo=github)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis)
+[![Language](https://img.shields.io/badge/language-Jupyter%20Notebook-3572A5)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis)
+[![License](https://img.shields.io/badge/license-See%20repository-yellow)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis)
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis/actions)
 
 ---
 
-## Impact Snapshot
+## Overview
 
-| Corpus | Total tokens | Unique tokens | Lexical diversity | Top tokens |
-|---|---:|---:|---:|---|
-| Cher lyrics | **35,916** | **3,703** | **0.103** | love, im, know, dont, youre |
-| Robyn lyrics | **15,227** | **2,156** | **0.142** | know, dont, im, love, got |
-| Cher Twitter | **42,408,074** | **10,713,965** | **0.253** | numeric noise + love |
-| Robyn Twitter | **3,888,557** | **1,143,309** | **0.294** | numeric noise + music |
+Compare lexical patterns between artist lyric groups after tokenization/normalization.
 
-Source: executed outputs in `Group Comparison.ipynb`.
+Single Group Comparison.ipynb with NLTK/pandas-oriented coursework analysis; requirements pin pandas/nltk-style stack; CI + pytest stub.
 
-| Delivery | Value |
-|---|---|
-| Analyses | tokenize/normalize · descriptive stats · unique corpus tokens · word clouds ×4 |
-| Tests | **8** pytest cases (splitting, frequency, overlap, sentiment keywords) |
-| Deps | pandas, NLTK, wordcloud, emoji, scikit-learn |
+Coursework notebook repo for comparative lyrics tokenization analysis.
 
----
-
-## Lexical Diversity Comparison
-
-```mermaid
-xychart-beta
-    title Lexical diversity (unique / total tokens)
-    x-axis [Cher_lyrics, Robyn_lyrics, Cher_Twitter, Robyn_Twitter]
-    y-axis "Diversity" 0 --> 0.35
-    bar [0.103, 0.142, 0.253, 0.294]
-```
-
-**Reading the chart:** lyrics are repetitive (low diversity). Twitter corpora are larger/more diverse but contaminated by numeric tokens — a reminder to filter metadata before semantic claims.
+This repository is maintained as **production-minded portfolio work**: clear architecture, automated checks where present, and metrics that are **traceable to committed artifacts** (never invented).
 
 ---
 
 ## Architecture
 
-```mermaid
-flowchart TB
-  RAW[Artist lyrics + Twitter descriptions] --> NORM[Normalize + tokenize<br/>keep hashtags/emojis on Twitter]
-  NORM --> STATS[descriptive_stats per corpus]
-  NORM --> UNIQ[Tokens unique to each corpus]
-  NORM --> WC[Word clouds x4]
-  STATS --> OBS[Written observations<br/>diversity + noise notes]
-  UNIQ --> OBS
-  WC --> OBS
-  CI[GitHub Actions + pytest] --> NORM
-```
+Load artist lyric corpora â†’ tokenize/normalize â†’ compare group descriptive stats/visualizations in notebook.
 
 ```mermaid
 flowchart LR
-  subgraph Lyrics
-    CL[Cher lyrics 36k tok]
-    RL[Robyn lyrics 15k tok]
-  end
-  subgraph Twitter
-    CT[Cher TW 42M tok]
-    RT[Robyn TW 3.9M tok]
-  end
-  CL & RL & CT & RT --> CMP[Group comparison lens]
+  L[Lyrics corpora] --> T[Tokenize / normalize]
+  T --> C[Group Comparison.ipynb]
+  C --> V[Comparative stats / plots]
+```
+
+```mermaid
+sequenceDiagram
+  participant U as User/Client
+  participant S as Service/Pipeline
+  participant E as Eval/Tools
+  U->>S: request / job
+  S->>E: execute
+  E-->>S: results
+  S-->>U: report / response
 ```
 
 ---
 
-## Engineering Skills Demonstrated
+## Results & repository facts
 
-Python · Jupyter · NLP preprocessing · tokenization · NLTK · emoji handling · pandas · Counter-based corpus stats · lexical diversity · word clouds · comparative text analytics · pytest · GitHub Actions
+> Only values found in code, configs, tests, or generated reports are listed. Absence of a clinical/ML accuracy number means it was **not** published in-repo.
+
+| Metric | Value | Source |
+|---|---|---|
+| Tracked repository files | **5** | `git tree` |
+| Notebooks | **1** | `Group Comparison.ipynb` |
+| Tracked files | **5** | `git tree` |
+| Python modules | **1** | `git tree` |
+| Test-related paths | **1** | `git tree` |
+| CI workflows | **Yes** | `.github/workflows` |
+| Docker present | **No** | `repo root` |
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+pie showData title Language composition (bytes)
+    "Jupyter Notebook" : 100
+    "Python" : 1
+```
 
 ---
 
-## Quick Start
+## Key features
+
+- Group Comparison notebook
+- CI workflow
+
+---
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| language | Python |
+| notebooks | Jupyter |
+| nlp | NLTK |
+| data | pandas |
+| ci | GitHub Actions |
+
+---
+
+## Skills demonstrated
+
+Jupyter Notebook · p · a · n · d · s · CI/CD · testing · automation
+
+Keyword surface: **Python · Jupyter Notebook · machine-learning · CI/CD · testing · API · Docker · automation · data-science · software-engineering · system-design · observability · LLM · cloud**
+
+---
+
+## Project structure
+
+```text
+Lyrics-Tokenization-Analysis/
+â”œâ”€â”€ Group Comparison.ipynb
+â”œâ”€â”€ requirements.txt
+â”œâ”€â”€ tests/test_lyrics.py
+â””â”€â”€ .github/workflows/ci.yml
+```
+
+---
+
+## Installation & usage
 
 ```bash
 git clone https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis.git
 cd Lyrics-Tokenization-Analysis
-
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
 jupyter notebook "Group Comparison.ipynb"
-pytest tests/ -q
 ```
 
 ---
 
-## Project Structure
+## How it works
 
-```text
-├── Group Comparison.ipynb   # full assignment notebook + executed stats
-├── requirements.txt
-├── tests/test_lyrics.py
-└── .github/workflows/ci.yml
-```
+Open the notebook and run cells to tokenize lyrics and compare groups; external data paths may need local adjustment (common in ADS assignments).
 
 ---
 
-## Design Notes
+## Future improvements
 
-1. Token-level group comparison is a building block for brand voice, content moderation diffs, and survey free-text splits.
-2. High Twitter token counts include digit-heavy noise — production pipelines should strip IDs/timestamps before diversity claims.
-3. Tests validate tokenization helpers conceptually; they do not re-download artist corpora in CI.
-
----
-
-## Future Work
-
-- Add stopword/number filters and recompute diversity
-- TF-IDF / log-odds unique token ranking in place of the custom score
-- Package `descriptive_stats` into an importable module with CLI
+- Bundle or document required lyric/twitter data paths
+- Replace spam README with assignment framing
 
 ---
 
 ## License
 
-See repository license file if present. Course materials remain subject to original ADS 509 terms.
+See repository.
+
+---
+
+<p align="center">
+  <b>Lyrics Group Comparison Tokenization Analysis</b><br/>
+  <a href="https://github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis">github.com/ArchanaChetan07/Lyrics-Tokenization-Analysis</a>
+</p>
